@@ -1,0 +1,19 @@
+function y = UniformFlow(y_guess,Q,S_0,b,m,k)
+% UniformFlow finds the equilibrium between bed- and friction slope.
+% Input variables:
+%   y_guess  %Initial guess of uniform water depth  
+%   Q        %Initial flow rate [m^3/s]
+%   S_0      %Bed slope of canal [-]
+%   b        %Channel width b [m]
+%   m        %Side slope [-]
+%   k        %Strickler coefficient [m^(1/3)/s] (1/n where n is Manning n)
+% Output variable:
+%   y        %Uniform water depth
+
+A=(b+m*y)*y
+dAdy=b+2*m*y
+
+Fun = @(x) x.^2-2;
+FunDer = @(x) 2.*x;
+
+[x]=NewtonRoot(Fun,FunDer,1,0.5,10)

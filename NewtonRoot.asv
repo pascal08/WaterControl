@@ -1,0 +1,27 @@
+function x_sol = NewtonRoot(fun,fun_der,x_guess,eps,i_max_iter)
+% NewtonRoot finds the root of Fun = 0 near the point Xest using Newton's method.
+% Input variables:
+% Fun       Name (string) of a function file that calculates Fun for a given x.
+% FunDer    Name (string) of a function file that calculates the derivative of Fun for given x
+% Xest      Initial estimate of the solution
+% Err       Maxiumum Error.
+% imax      Maxiumum number of iterations
+% Output variable:
+% Xs        Solution
+
+    x(1)=x_guess;
+    
+    for i=2:5
+        x(i) = x(i-1) - feval(fun,x(i-1))/feval(fun_der,x(i-1));
+        if abs((x(i)-x(i-1))/x(i-1)) < eps
+            x_sol = x(i)
+            break
+        end
+    end
+    
+    if i==i_max_iter
+        errorfprintf('Solution was not obtained in %i iterations.\n',i_max_iter);
+        x_sol = ('No answer')
+    end
+    
+end
